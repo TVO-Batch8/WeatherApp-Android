@@ -57,42 +57,39 @@ public class WeatherJSONParser {
      *
      * @param string is object json get from webservice
      */
-    public static CurrentWeather getCurrentWeather(String string) {
-        try {
-            CurrentWeather currentWeather = new CurrentWeather();
+    public static CurrentWeather getCurrentWeather(String string) throws JSONException {
 
-            //get object from superobject
-            JSONObject object = new JSONObject(string);
-            JSONObject current_observation = object.getJSONObject(CURRENT_OBSERVATION_JSON);
-            JSONObject displayLocation = current_observation.getJSONObject(DISPLAY_LOCATION_JSON);
+        CurrentWeather currentWeather = new CurrentWeather();
 
-            //get values from object
-            String country = displayLocation.getString(COUNTRY);
-            String date = current_observation.getString(DATE);
-            String weather = current_observation.getString(WEATHER);
-            int teamp_f = current_observation.getInt(TEMP_F);
-            int teamp_c = current_observation.getInt(TEMP_C);
-            String relative_hummid = current_observation.getString(HUMMIDITY);
-            int wind_mdp = current_observation.getInt(WIND);
-            String pressure_mb = current_observation.getString(PRESSURE);
-            String icon = current_observation.getString(ICON);
+        //get object from superobject
+        JSONObject object = new JSONObject(string);
+        JSONObject current_observation = object.getJSONObject(CURRENT_OBSERVATION_JSON);
+        JSONObject displayLocation = current_observation.getJSONObject(DISPLAY_LOCATION_JSON);
 
-            //insert value to currentWeather.class
-            currentWeather.setCountry(country);
-            currentWeather.setDate(date);
-            currentWeather.setIcon(icon);
-            currentWeather.setPressure_mb(pressure_mb);
-            currentWeather.setRelative_hummid(relative_hummid);
-            currentWeather.setTeamp_c(teamp_c);
-            currentWeather.setTeamp_f(teamp_f);
-            currentWeather.setWeather(weather);
-            currentWeather.setWind_mdp(wind_mdp);
+        //get values from object
+        String country = displayLocation.getString(COUNTRY);
+        String date = current_observation.getString(DATE);
+        String weather = current_observation.getString(WEATHER);
+        int teamp_f = current_observation.getInt(TEMP_F);
+        int teamp_c = current_observation.getInt(TEMP_C);
+        String relative_hummid = current_observation.getString(HUMMIDITY);
+        int wind_mdp = current_observation.getInt(WIND);
+        String pressure_mb = current_observation.getString(PRESSURE);
+        String icon = current_observation.getString(ICON);
 
-            return currentWeather;
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
+        //insert value to currentWeather.class
+        currentWeather.setCountry(country);
+        currentWeather.setDate(date);
+        currentWeather.setIcon(icon);
+        currentWeather.setPressure_mb(pressure_mb);
+        currentWeather.setRelative_hummid(relative_hummid);
+        currentWeather.setTeamp_c(teamp_c);
+        currentWeather.setTeamp_f(teamp_f);
+        currentWeather.setWeather(weather);
+        currentWeather.setWind_mdp(wind_mdp);
+
+        return currentWeather;
+
     }
 
     /**
@@ -101,99 +98,81 @@ public class WeatherJSONParser {
      * @param string is object json get from webservice
      * @param day    is day in a week from 1 day to 7 day
      */
-    public static WeekWeather getWeekWeather(String string, int day) {
-        try {
-            WeekWeather week = new WeekWeather();
+    public static WeekWeather getWeekWeather(String string, int day) throws JSONException {
+        WeekWeather week = new WeekWeather();
 
-            //get object from superobject
-            JSONObject object = new JSONObject(string);
-            JSONObject forecast = object.getJSONObject(FORECAST_JSON);
-            JSONObject simpleforecast = forecast.getJSONObject(SIMPLEFORECAST_JSON);
-            JSONArray arrayForecastday = simpleforecast.getJSONArray(FORECASTDAY_JSON);
+        //get object from superobject
+        JSONObject object = new JSONObject(string);
+        JSONObject forecast = object.getJSONObject(FORECAST_JSON);
+        JSONObject simpleforecast = forecast.getJSONObject(SIMPLEFORECAST_JSON);
+        JSONArray arrayForecastday = simpleforecast.getJSONArray(FORECASTDAY_JSON);
 
-            JSONObject weekJSON = arrayForecastday.getJSONObject(day);//get a day in 7 day
-            JSONObject hight = weekJSON.getJSONObject(HIGH_JSON);
-            JSONObject low = weekJSON.getJSONObject(LOW_JSON);
-            JSONObject jsonDate = weekJSON.getJSONObject(DATE_JSON);
+        JSONObject weekJSON = arrayForecastday.getJSONObject(day);//get a day in 7 day
+        JSONObject hight = weekJSON.getJSONObject(HIGH_JSON);
+        JSONObject low = weekJSON.getJSONObject(LOW_JSON);
+        JSONObject jsonDate = weekJSON.getJSONObject(DATE_JSON);
 
-            //insert value to currentWeather.class
-            String date = jsonDate.getString(WEEKDAY_SHORT) + ", "
-                    + jsonDate.getString(DAY) + " "
-                    + jsonDate.getString(MONTHNAME) + " "
-                    + jsonDate.getString(YEAR);
-            String icon = weekJSON.getString(ICON);
-            String conditions = weekJSON.getString(CONDITIONS);
+        //insert value to currentWeather.class
+        String date = jsonDate.getString(WEEKDAY_SHORT) + ", "
+                + jsonDate.getString(DAY) + " "
+                + jsonDate.getString(MONTHNAME) + " "
+                + jsonDate.getString(YEAR);
+        String icon = weekJSON.getString(ICON);
+        String conditions = weekJSON.getString(CONDITIONS);
 
-            String fahrenheit = low.getString(FAHRENHEIT) + "/"
-                    + hight.getString(FAHRENHEIT) + "F";
-            String celsius = low.getString(CELSIUS) + "/"
-                    + hight.getString(CELSIUS) + "°C";
+        String fahrenheit = low.getString(FAHRENHEIT) + "/"
+                + hight.getString(FAHRENHEIT) + "F";
+        String celsius = low.getString(CELSIUS) + "/"
+                + hight.getString(CELSIUS) + "°C";
 
-            //insert value to WeekWeather.class
-            week.setIcon(icon);
-            week.setDate(date);
-            week.setCelsius(celsius);
-            week.setConditions(conditions);
-            week.setFahrenheit(fahrenheit);
-            return week;
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
+        //insert value to WeekWeather.class
+        week.setIcon(icon);
+        week.setDate(date);
+        week.setCelsius(celsius);
+        week.setConditions(conditions);
+        week.setFahrenheit(fahrenheit);
+        return week;
     }
 
-    public static int countArrayWeek(String string) {
+    public static int countArrayWeek(String string) throws JSONException {
         int count = 0;
-        try {
-            JSONObject object = new JSONObject(string);
-            JSONObject forecast = object.getJSONObject(FORECAST_JSON);
-            JSONObject simpleforecast = forecast.getJSONObject(SIMPLEFORECAST_JSON);
-            JSONArray arrayForecastday = simpleforecast.getJSONArray(FORECASTDAY_JSON);
-            count = arrayForecastday.length();
-            return count;
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
+        JSONObject object = new JSONObject(string);
+        JSONObject forecast = object.getJSONObject(FORECAST_JSON);
+        JSONObject simpleforecast = forecast.getJSONObject(SIMPLEFORECAST_JSON);
+        JSONArray arrayForecastday = simpleforecast.getJSONArray(FORECASTDAY_JSON);
+        count = arrayForecastday.length();
         return count;
+
     }
 
     // TODO: 18/07/2015
-    public static ArrayList<Country> getCountry(String string) {
+    public static ArrayList<Country> getCountry(String string) throws JSONException {
         ArrayList<Country> arrayCountry = new ArrayList<>();
-        try {
-            JSONObject jsonObject = new JSONObject(string);
-            JSONObject jsonResponse = jsonObject.getJSONObject(RESPONSE_JSON);
-            JSONArray arrayResults = jsonResponse.getJSONArray(RESULT_JSON);
-            for (int i = 0; i < arrayResults.length(); i++) {
-                JSONObject itemResult = arrayResults.getJSONObject(i);
-                Country country = new Country();
-                country.setZmw("zmw:" + itemResult.getString(ZMW));
-                String city = itemResult.getString(CITY);
-                String country_name = itemResult.getString(COUNTRY_STATE);
-                country.setCountryname(
-                        city + "("
-                                + country_name + ")");
-                arrayCountry.add(country);
-            }
-            return arrayCountry;
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+        JSONObject jsonObject = new JSONObject(string);
+        JSONObject jsonResponse = jsonObject.getJSONObject(RESPONSE_JSON);
+        JSONArray arrayResults = jsonResponse.getJSONArray(RESULT_JSON);
+        for (int i = 0; i < arrayResults.length(); i++) {
+            JSONObject itemResult = arrayResults.getJSONObject(i);
+            Country country = new Country();
+            country.setZmw("zmw:" + itemResult.getString(ZMW));
+            String city = itemResult.getString(CITY);
+            String country_name = itemResult.getString(COUNTRY_STATE);
+            country.setCountryname(
+                    city + "("
+                            + country_name + ")");
+            arrayCountry.add(country);
         }
         return arrayCountry;
+
     }
 
-    public static String readError(String string) {
+    public static String readError(String string) throws JSONException {
         String data = "";
-        try {
-            JSONObject jsonObject = new JSONObject(string);
-            JSONObject jsonResponse = jsonObject.getJSONObject(RESPONSE_JSON);
-            JSONObject jsonError = jsonResponse.getJSONObject(ERROR_JSON);
-            data = jsonError.getString(TYPE);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        JSONObject jsonObject = new JSONObject(string);
+        JSONObject jsonResponse = jsonObject.getJSONObject(RESPONSE_JSON);
+        JSONObject jsonError = jsonResponse.getJSONObject(ERROR_JSON);
+        data = jsonError.getString(TYPE);
         return data;
     }
 }

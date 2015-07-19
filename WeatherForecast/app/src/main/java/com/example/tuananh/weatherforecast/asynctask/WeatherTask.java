@@ -23,11 +23,14 @@ import com.example.tuananh.weatherforecast.other.ReadFile;
 import com.example.tuananh.weatherforecast.other.SettingShare;
 import com.example.tuananh.weatherforecast.sqlite.MyDatabase;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class WeatherTask extends AsyncTask<String, Integer, Void> {
+public class WeatherTask extends AsyncTask<String, Integer, String> {
     //check current language of device;
     private SQLiteDatabase mDb;
     private Context mContext;
@@ -62,7 +65,7 @@ public class WeatherTask extends AsyncTask<String, Integer, Void> {
     }
 
     @Override
-    protected Void doInBackground(String... params) {
+    protected String doInBackground(String... params) {
         String url;
         //set automatic key
         int key = new SettingShare(mContext)
@@ -74,11 +77,11 @@ public class WeatherTask extends AsyncTask<String, Integer, Void> {
         url = HTTP_Url.URL + new ReadFile(mContext).getFile(0) +
                 new SettingShare(mContext).chooseLanguage(langauage)
                 + params[0] + HTTP_Url.JSON;
-        String getUrl = null;
+        String getUrl;
         try {
             getUrl = HTTP_Url.readJSON(url);
             mError = WeatherJSONParser.readError(getUrl);
-           /* if (mError.equals("") || mError == null) {
+            if (mError.equals("") || mError == null) {
                 key = key + 1;
                 if (key >= new ReadFile(mContext).getCount()){
                     key = 0;
@@ -88,29 +91,27 @@ public class WeatherTask extends AsyncTask<String, Integer, Void> {
                         + params[0] + HTTP_Url.JSON;
                 getUrl = HTTP_Url.readJSON(url);
                 new SettingShare(mContext).saveShareInt(SettingShare.API_KEY, key);
-            }*/
+            }
+            mArrayList = new ArrayList<>();
+            arrayCountry = new ArrayList<>();
+            getCurrent = new CurrentWeather();
 
-        } catch (SocketTimeoutException e) {
+            getCurrent = WeatherJSONParser.getCurrentWeather(getUrl);
+            mCount = WeatherJSONParser.countArrayWeek(getUrl);
+            for (int i = 0; i < mCount; i++) {
+                WeekWeather getWeek;
+                getWeek = WeatherJSONParser.getWeekWeather(getUrl, i);
+                mArrayList.add(getWeek);
+            }
+            arrayCountry = WeatherJSONParser.getCountry(getUrl);
+        } catch (SocketTimeoutException | JSONException e) {
             e.printStackTrace();
         }
-        mArrayList = new ArrayList<>();
-        arrayCountry = new ArrayList<>();
-        getCurrent = new CurrentWeather();
-
-        getCurrent = WeatherJSONParser.getCurrentWeather(getUrl);
-        mCount = WeatherJSONParser.countArrayWeek(getUrl);
-        for (int i = 0; i < mCount; i++) {
-            WeekWeather getWeek;
-            getWeek = WeatherJSONParser.getWeekWeather(getUrl, i);
-            mArrayList.add(getWeek);
-        }
-        arrayCountry = WeatherJSONParser.getCountry(getUrl);
-
         return null;
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
+    protected void onPostExecute(String aVoid) {
         super.onPostExecute(aVoid);
         if (!mFlag) {
             showDialog.dismiss();
