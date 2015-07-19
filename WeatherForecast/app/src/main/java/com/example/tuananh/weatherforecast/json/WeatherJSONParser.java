@@ -24,7 +24,7 @@ public class WeatherJSONParser {
     public static final String ICON = "icon";
     public static final String WIND = "wind_mph";
 
-    public static final String WEEKDAY_SHORT = "weekday_short";
+    public static final String WEEKDAY = "weekday";
     public static final String DAY = "day";
     public static final String MONTHNAME = "monthname";
     public static final String YEAR = "year";
@@ -65,10 +65,19 @@ public class WeatherJSONParser {
             JSONObject object = new JSONObject(string);
             JSONObject current_observation = object.getJSONObject(CURRENT_OBSERVATION_JSON);
             JSONObject displayLocation = current_observation.getJSONObject(DISPLAY_LOCATION_JSON);
+            JSONObject forecast = object.getJSONObject(FORECAST_JSON);
+            JSONObject simpleforecast = forecast.getJSONObject(SIMPLEFORECAST_JSON);
+            JSONArray arrayForecastday = simpleforecast.getJSONArray(FORECASTDAY_JSON);
+            JSONObject weekJSON = arrayForecastday.getJSONObject(0);
+            JSONObject jsonDate = weekJSON.getJSONObject(DATE_JSON);
 
             //get values from object
+            long day =  jsonDate.getLong(DAY) ;
+            long year = jsonDate.getLong(YEAR);
+            String month = jsonDate.getString(MONTHNAME);
+            String date = jsonDate.getString(WEEKDAY);
             String country = displayLocation.getString(COUNTRY);
-            String date = current_observation.getString(DATE);
+            String hour = cutString(current_observation.getString(DATE));
             String weather = current_observation.getString(WEATHER);
             int teamp_f = current_observation.getInt(TEMP_F);
             int teamp_c = current_observation.getInt(TEMP_C);
@@ -78,6 +87,11 @@ public class WeatherJSONParser {
             String icon = current_observation.getString(ICON);
 
             //insert value to currentWeather.class
+            currentWeather.setDay(day);
+            currentWeather.setYear(year);
+            currentWeather.setMonth(month);
+            currentWeather.setDay(day);
+            currentWeather.setHour(hour);
             currentWeather.setCountry(country);
             currentWeather.setDate(date);
             currentWeather.setIcon(icon);
@@ -116,7 +130,7 @@ public class WeatherJSONParser {
             JSONObject jsonDate = weekJSON.getJSONObject(DATE_JSON);
 
             //insert value to currentWeather.class
-            String date = jsonDate.getString(WEEKDAY_SHORT) + ", "
+            String date = jsonDate.getString(WEEKDAY) + ", "
                     + jsonDate.getString(DAY) + " "
                     + jsonDate.getString(MONTHNAME) + " "
                     + jsonDate.getString(YEAR);
@@ -191,5 +205,10 @@ public class WeatherJSONParser {
             e.printStackTrace();
         }
         return data;
+    }
+
+    private static String cutString(String string){
+        String[] array = string.split(" ");
+        return array[4];
     }
 }

@@ -139,6 +139,10 @@ public class WeatherTask extends AsyncTask<String, Integer, String> {
             valuesCurrent.put(MyDatabase.PRESSURE, getCurrent.getPressure_mb());
             valuesCurrent.put(MyDatabase.ICON, getCurrent.getIcon());
             valuesCurrent.put(MyDatabase.WIND, getCurrent.getWind_mdp());
+            valuesCurrent.put(MyDatabase.HOUR, getCurrent.getHour());
+            valuesCurrent.put(MyDatabase.DAY, getCurrent.getDay());
+            valuesCurrent.put(MyDatabase.MONTH, getCurrent.getMonth());
+            valuesCurrent.put(MyDatabase.YEAR, getCurrent.getYear());
             mDb.insert(MyDatabase.CURRENTTABLE, null, valuesCurrent);
 
             for (int i = 1; i < mCount; i++) {
@@ -202,7 +206,7 @@ public class WeatherTask extends AsyncTask<String, Integer, String> {
                 .setMessage(
                         mContext.getResources().getString(R.string.refreshapp) + "\n"
                                 + mContext.getResources().getString(R.string.clickyes) + "\n"
-                                + mContext.getResources().getString(R.string.clickno) + "\n"
+                                + mContext.getResources().getString(R.string.clickno)
                 )
                 .setCancelable(false)
                 .setPositiveButton(mContext.getResources().getString(R.string.btn_yes_dialog_question)

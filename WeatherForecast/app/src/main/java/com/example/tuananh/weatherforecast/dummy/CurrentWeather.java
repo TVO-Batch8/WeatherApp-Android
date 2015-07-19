@@ -1,10 +1,5 @@
 package com.example.tuananh.weatherforecast.dummy;
 
-import android.util.Log;
-
-/**
- * Created by TuanAnh on 04/07/2015.
- */
 public class CurrentWeather {
     public String getDate() {
         return date;
@@ -86,4 +81,43 @@ public class CurrentWeather {
     }
 
     private int wind_mdp;
+
+    public long getDay() {
+        return day;
+    }
+
+    public void setDay(long day) {
+        this.day = day;
+    }
+
+
+    public long getYear() {
+        return year;
+    }
+
+    public void setYear(long year) {
+        this.year = year;
+    }
+
+    private long day, year;
+
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour;
+    }
+
+    private String hour;
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    private String month;
 }

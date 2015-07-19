@@ -50,12 +50,23 @@ public class CurrentWeatherFragment extends Fragment {
         mDb = new MyDatabase(getActivity()).getWritableDatabase();
         String query = "SELECT * FROM " + MyDatabase.CURRENTTABLE;
         Cursor cu = mDb.rawQuery(query, null);
-
+        String temperature = new SettingShare(getActivity()).getShare(
+                SettingShare.TEMPERATURE, ""
+        );
         if (cu.moveToFirst()) {
-
             mC = cu.getInt(cu.getColumnIndex(MyDatabase.TEAMP_C)) + "°C";
             mF = cu.getInt(cu.getColumnIndex(MyDatabase.TEAMP_F)) + "F";
-            tv_date.setText(cu.getString(cu.getColumnIndex(MyDatabase.DATE)));
+            if (temperature.equals("") || temperature.equals("c")) {
+                tv_temperature.setText(mC);
+            } else {
+                tv_temperature.setText(mF);
+            }
+            tv_date.setText(cu.getString(cu.getColumnIndex(MyDatabase.HOUR))+", "
+                    +cu.getString(cu.getColumnIndex(MyDatabase.DATE))+", "
+                    +cu.getLong(cu.getColumnIndex(MyDatabase.DAY))+" "
+                    +cu.getString(cu.getColumnIndex(MyDatabase.MONTH))+" "
+                    +cu.getLong(cu.getColumnIndex(MyDatabase.YEAR))
+            );
             tv_country.setText(cu.getString(cu.getColumnIndex(MyDatabase.COUNTRY)));
             tv_pressure.setText((getResources().getString(R.string.presure)) + " "
                     + cu.getString(cu.getColumnIndex(MyDatabase.PRESSURE))+ "mb");
@@ -75,33 +86,6 @@ public class CurrentWeatherFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        // TODO: 13/07/2015
-        String temperature = new SettingShare(getActivity()).getShare(
-                SettingShare.TEMPERATURE, ""
-        );
-        /*String query = "SELECT * FROM " + MyDatabase.CURRENTTABLE;
-        Cursor cu = mDb.rawQuery(query, null);
-        if (cu.moveToFirst()) {
-
-            mC = cu.getInt(cu.getColumnIndex(MyDatabase.TEAMP_C)) + "°C";
-            mF = cu.getInt(cu.getColumnIndex(MyDatabase.TEAMP_F)) + "F";
-            tv_date.setText(cu.getString(cu.getColumnIndex(MyDatabase.DATE)));
-            tv_country.setText(cu.getString(cu.getColumnIndex(MyDatabase.COUNTRY)));
-            tv_pressure.setText((getResources().getString(R.string.presure) + "mb") + " "
-                    + cu.getString(cu.getColumnIndex(MyDatabase.PRESSURE)));
-            tv_wind.setText((getResources().getString(R.string.wind)) + " "
-                    + cu.getInt(cu.getColumnIndex(MyDatabase.WIND)) + "mdp");
-            tv_hummidity.setText((getResources().getString(R.string.hummid)) + " "
-                    + cu.getString(cu.getColumnIndex(MyDatabase.HUMMID)));
-            tv_weather.setText(cu.getString(cu.getColumnIndex(MyDatabase.STATE)));
-            String icon = cu.getString(cu.getColumnIndex(MyDatabase.ICON));
-            getImageView.imgv(icon, imgv_icon);
-        }*/
-        if (temperature.equals("") || temperature.equals("c")) {
-            tv_temperature.setText(mC);
-        } else {
-            tv_temperature.setText(mF);
-        }
     }
 
     @Override

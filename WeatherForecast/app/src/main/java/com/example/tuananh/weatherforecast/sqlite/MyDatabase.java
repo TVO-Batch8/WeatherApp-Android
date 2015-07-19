@@ -22,6 +22,10 @@ public class MyDatabase extends SQLiteOpenHelper {
     public static final String HUMMID = "HUMMID";
     public static final String STATE = "STATE";
     public static final String ICON = "ICON";
+    public static final String DAY = "DAY";
+    public static final String MONTH = "MONTH";
+    public static final String YEAR = "YEAR";
+    public static final String HOUR = "HOUR";
     public MyDatabase(Context context) {
         super(context, DATABASE, null, 1);
     }
@@ -40,7 +44,11 @@ public class MyDatabase extends SQLiteOpenHelper {
                 + CURRENTTABLE + "("
                 + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COUNTRY + " TEXT, "
+                + HOUR + " TEXT, "
                 + DATE + " TEXT, "
+                + DAY + " LONG, "
+                + MONTH + " TEXT, "
+                + YEAR + " LONG, "
                 + STATE + " TEXT, "
                 + TEAMP_C + " INTEGER, "
                 + TEAMP_F + " INTEGER, "
