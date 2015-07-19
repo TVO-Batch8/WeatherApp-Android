@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">Dự báo thời tiết</string>
+
+    <string name="hello_world">Xin chào</string>
+    <string name="action_settings">Cài Đặt</string>
+    <string name="action_search">Tìm kiếm</string>
+    <string name="action_refesh">Cập nhật</string>
+    <string name="tv_welcome">Xin chào quý khách</string>
+    <string name="title_activity_welcome">Chào mừng</string>
+    <string name="btn_key">mã API</string>
+    <string name="btn_background">hình nền</string>
+    <string name="btn_language">Ngôn ngữ</string>
+    <string name="btn_exit">Thoát</string>
+    <string name="gettinglocation">Đang dò tọa độ</string>
+    <string name="List_city">Kết quả tìm được</string>
+    <string name="temperature">Nhiệt độ </string>
+    <string name="presure">Áp suất </string>
+    <string name="hummid">Độ ẩm </string>
+    <string name="wind">Tốc độ gió </string>
+    <string-array name="tab_name">
+        <item>Hôm nay</item>
+        <item>Trong tuần</item>
+    </string-array>
+    <string name="search_hint">Tìm thành phố..</string>
+    <string name="download">Xin chờ</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+
+    <string name="language_en">Tiếng Anh</string>
+    <string name="language_vn">Tiếng Việt</string>
+    <string name="btn_cancel">Quay lại</string>
+    <string name="btn_save">Lưu</string>
+
+    <string-array name="language_name">
+        <item>Tiếng Việt</item>
+        <item>Tiếng Anh</item>
+    </string-array>
+    <string name="spinner_prompt_temperature">Nhiệt độ</string>
+    <string name="theme_red">Nền bầu trời</string>
+    <string name="theme_black">Nền núi</string>
+    <string name="theme_pink">Nền Bão</string>
+    <string name="theme_default">Nền mặc định</string>
+    <string name="please">Tải dữ liệu</string>
+    <string name="dialogtitle">Bật Gps và internet</string>
+    <string name="messagedialog">GPS hoặc internet không kết nối. Bạn có muốn đến phần cài đặt không</string>
+    <string name="title_activity_search">Tìm kiếm thành phố</string>
+    <string name="btn_search">Tìm kiếm</string>
+    <string name="edt_hint">Thành phố</string>
+    <string name="title_dialog_question">Cập nhật lại</string>
+    <string name="message_dialog_question">Bạn có muốn cập nhật lại thời tiết bằng ngôn ngữ hiện tại?</string>
+    <string name="btn_yes_dialog_question">Có</string>
+    <string name="btn_no_dialog_question">Không</string>
+    <string name="input_emty">bạn phải điền thông tin vào.</string>
+    <string name="find">Không có giá trị</string>
+    <string name="listcountry">Tên thành phố</string>
+</resources>

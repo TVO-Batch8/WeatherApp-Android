@@ -1,0 +1,60 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">#FFF</item>
+        <item name="android:buttonStyle">@style/CKButton</item>
+        <item name="android:radioButtonStyle">@style/MyRadioButton</item>
+        <item name="android:editTextColor">#FFF</item>
+        <item name="android:windowBackground">@drawable/rainbackground</item>
+    </style>
+
+    <style name="RedBackground" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:textColor">#FFF</item>
+        <item name="android:buttonStyle">@style/CKButton</item>
+        <item name="android:radioButtonStyle">@style/MyRadioButton</item>
+        <item name="android:editTextColor">#FFF</item>
+        <item name="android:windowBackground">@drawable/cloundybackground</item>
+    </style>
+
+    <style name="PinkBackground" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:textColor">#FFF</item>
+        <item name="android:buttonStyle">@style/CKButton</item>
+        <item name="android:radioButtonStyle">@style/MyRadioButton</item>
+        <item name="android:editTextColor">#FFF</item>
+        <item name="android:windowBackground">@drawable/stomybackground</item>
+    </style>
+    <style name="BlackBackground" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:textColor">#FFF</item>
+        <item name="android:buttonStyle">@style/CKButton</item>
+        <item name="android:radioButtonStyle">@style/MyRadioButton</item>
+        <item name="android:editTextColor">#FFF</item>
+        <item name="android:windowBackground">@drawable/mountainbackground</item>
+    </style>
+
+    <!--cutom button-->
+    <style name="CKButton" parent="android:style/Widget.Button">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!--cutom radiobutton-->
+    <style name="MyRadioButton" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:button">@drawable/custom_radio_button</item>
+    </style>
+    <style name="NewDialog" parent="@android:style/Theme.Dialog">
+
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:colorBackground">#ffffff</item>// change background color
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:textColor">#0FECFF</item>// change color
+    </style>
+
+</resources>
