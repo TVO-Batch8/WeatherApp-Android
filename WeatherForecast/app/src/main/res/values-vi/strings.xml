@@ -43,6 +43,8 @@
     <string name="please">Tải dữ liệu</string>
     <string name="dialogtitle">Bật Gps và internet</string>
     <string name="messagedialog">GPS hoặc internet không kết nối. Bạn có muốn đến phần cài đặt không</string>
+    <string name="messagedialog1">GPS hoặc internet không kết nối</string>
+    <string name="messagedialog2">internet không kết nối</string>
     <string name="title_activity_search">Tìm kiếm thành phố</string>
     <string name="btn_search">Tìm kiếm</string>
     <string name="edt_hint">Thành phố</string>

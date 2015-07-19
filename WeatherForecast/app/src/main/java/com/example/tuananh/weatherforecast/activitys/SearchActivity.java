@@ -14,7 +14,9 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.tuananh.weatherforecast.R;
+import com.example.tuananh.weatherforecast.asynctask.LocationTask;
 import com.example.tuananh.weatherforecast.asynctask.WeatherTask;
+import com.example.tuananh.weatherforecast.other.NetWorkState;
 import com.example.tuananh.weatherforecast.other.SettingShare;
 
 import java.util.Locale;
@@ -56,7 +58,11 @@ public class SearchActivity extends Activity implements View.OnClickListener{
         {
             case R.id.btn_search:
                 if(edt_Request.getText().length() > 0) {
-                    new WeatherTask(this, false).execute(edt_Request.getText().toString());
+                    int internet = NetWorkState.getConnectivityStatus(this);
+                    if (internet == NetWorkState.TYPE_MOBILE || internet == NetWorkState.TYPE_WIFI) {
+                        new LocationTask(this, false).execute();
+                    } else Toast.makeText(this, getResources().getString(R.string.messagedialog2)
+                            , Toast.LENGTH_SHORT).show();
                 }
                 else
                 {

@@ -17,6 +17,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.tuananh.weatherforecast.R;
 import com.example.tuananh.weatherforecast.adapter.TabAdapter;
@@ -35,9 +36,7 @@ import java.util.Locale;
 
 public class MainActivity extends FragmentActivity {
 
-    public static final String CURRENT = "current";
-    public static final String WEEK = "week";
-
+    boolean mFlag;
     ViewPager mPager;
     TabAdapter adapter;
     String[] arrayTab;
@@ -130,15 +129,18 @@ public class MainActivity extends FragmentActivity {
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_settings: {
+                mFlag = true;
                 Intent intent = new Intent(MainActivity.this, SettingActivity.class);
                 startActivity(intent);
                 return true;
             }
             case R.id.action_search:
+                mFlag = true;
                 Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.action_refesh:
+                mFlag = true;
                 setRefresh();
                 return true;
         }
@@ -192,14 +194,17 @@ public class MainActivity extends FragmentActivity {
     private void setRefresh() {
         int internet = NetWorkState.getConnectivityStatus(MainActivity.this);
         if (internet == NetWorkState.TYPE_MOBILE || internet == NetWorkState.TYPE_WIFI && gps.canGetLocation()) {
-            new LocationTask(MainActivity.this, false).execute();
-        } else gps.showSettingsAlert();
+            new LocationTask(MainActivity.this, mFlag).execute();
+        } else Toast.makeText(this, getResources().getString(R.string.messagedialog1)
+                , Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        finish();
+        if(!mFlag) {
+            finish();
+        }
         Log.d("lifeactivity", "onStop");
     }
 
