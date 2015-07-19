@@ -48,6 +48,12 @@ public class WelcomeActivity extends Activity {
         setContentView(R.layout.activity_welcome);
 
         gps = new GPS(WelcomeActivity.this);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         int internet = NetWorkState.getConnectivityStatus(WelcomeActivity.this);
         if (internet == NetWorkState.TYPE_MOBILE || internet == NetWorkState.TYPE_WIFI && gps.canGetLocation()) {
             new LocationTask(WelcomeActivity.this, true).execute();
@@ -58,12 +64,6 @@ public class WelcomeActivity extends Activity {
             gps.showSettingsAlert();
 
         }
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
 
     }
 
