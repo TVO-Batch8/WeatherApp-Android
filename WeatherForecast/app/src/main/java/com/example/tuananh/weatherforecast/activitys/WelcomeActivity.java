@@ -25,6 +25,7 @@ public class WelcomeActivity extends Activity {
 
     //private String url;
     private GPS gps;
+    private boolean mFlag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +51,13 @@ public class WelcomeActivity extends Activity {
         int internet = NetWorkState.getConnectivityStatus(WelcomeActivity.this);
         if (internet == NetWorkState.TYPE_MOBILE || internet == NetWorkState.TYPE_WIFI && gps.canGetLocation()) {
             new LocationTask(WelcomeActivity.this, true).execute();
+            mFlag = true;
             //new WeatherTask(WelcomeActivity.this, true).execute("london");
-        } else gps.showSettingsAlert();
+        } else {
+            mFlag = false;
+            gps.showSettingsAlert();
+
+        }
 
     }
 
@@ -64,7 +70,9 @@ public class WelcomeActivity extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
-        finish();
+        if(mFlag) {
+            finish();
+        }
     }
 
     @Override
