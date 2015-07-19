@@ -17,8 +17,10 @@ import com.example.tuananh.weatherforecast.activitys.SearchActivity;
 import com.example.tuananh.weatherforecast.dummy.Country;
 import com.example.tuananh.weatherforecast.dummy.CurrentWeather;
 import com.example.tuananh.weatherforecast.dummy.WeekWeather;
+import com.example.tuananh.weatherforecast.internet.GPS;
 import com.example.tuananh.weatherforecast.internet.HTTP_Url;
 import com.example.tuananh.weatherforecast.json.WeatherJSONParser;
+import com.example.tuananh.weatherforecast.other.NetWorkState;
 import com.example.tuananh.weatherforecast.other.ReadFile;
 import com.example.tuananh.weatherforecast.other.SettingShare;
 import com.example.tuananh.weatherforecast.sqlite.MyDatabase;
@@ -77,10 +79,13 @@ public class WeatherTask extends AsyncTask<String, Integer, String> {
         url = HTTP_Url.URL + new ReadFile(mContext).getFile(0) +
                 new SettingShare(mContext).chooseLanguage(langauage)
                 + params[0] + HTTP_Url.JSON;
-        String getUrl;
+        String getUrl = "";
         try {
             getUrl = HTTP_Url.readJSON(url);
-            mError = WeatherJSONParser.readError(getUrl);
+        } catch (SocketTimeoutException e) {
+            e.printStackTrace();
+        }
+            /*mError = WeatherJSONParser.readError(getUrl);
             if (mError.equals("") || mError == null) {
                 key = key + 1;
                 if (key >= new ReadFile(mContext).getCount()){
@@ -91,11 +96,12 @@ public class WeatherTask extends AsyncTask<String, Integer, String> {
                         + params[0] + HTTP_Url.JSON;
                 getUrl = HTTP_Url.readJSON(url);
                 new SettingShare(mContext).saveShareInt(SettingShare.API_KEY, key);
-            }
-            mArrayList = new ArrayList<>();
-            arrayCountry = new ArrayList<>();
-            getCurrent = new CurrentWeather();
+            }*/
+        mArrayList = new ArrayList<>();
+        arrayCountry = new ArrayList<>();
+        getCurrent = new CurrentWeather();
 
+        if (getUrl != null) {
             getCurrent = WeatherJSONParser.getCurrentWeather(getUrl);
             mCount = WeatherJSONParser.countArrayWeek(getUrl);
             for (int i = 0; i < mCount; i++) {
@@ -104,10 +110,9 @@ public class WeatherTask extends AsyncTask<String, Integer, String> {
                 mArrayList.add(getWeek);
             }
             arrayCountry = WeatherJSONParser.getCountry(getUrl);
-        } catch (SocketTimeoutException | JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
+            return params[0];
+        } else
+            return null;
     }
 
     @Override
@@ -118,6 +123,7 @@ public class WeatherTask extends AsyncTask<String, Integer, String> {
         }
 
         //valid information weather not nul
+        if (aVoid != null) {
         if (getCurrent != null && mArrayList.size() > 0) {
             //delete all value in table
             mDb.delete(MyDatabase.CURRENTTABLE, null, null);
@@ -158,7 +164,8 @@ public class WeatherTask extends AsyncTask<String, Integer, String> {
                     names[i] = arrayCountry.get(i).getCountryname();
                 }
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.NewDialog);
+                AlertDialog.Builder builder = new AlertDialog.
+                        Builder(mContext, R.style.NewDialog);
 
                 builder.setTitle(mContext.getResources().getString(R.string.listcountry))
                         .setItems(names, new DialogInterface.OnClickListener() {
@@ -178,7 +185,52 @@ public class WeatherTask extends AsyncTask<String, Integer, String> {
 
             }
         }
+        } else {
+            if (!mFlag) {
+                Toast.makeText(mContext, mContext.getResources()
+                        .getString(R.string.find), Toast.LENGTH_SHORT).show();
+            } else setDialog();
+        }
+    }
 
+    public void setDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                mContext, R.style.NewDialog);
 
+        // set dialog message
+        alertDialogBuilder
+                .setMessage(
+                        mContext.getResources().getString(R.string.refreshapp) + "\n"
+                                + mContext.getResources().getString(R.string.clickyes) + "\n"
+                                + mContext.getResources().getString(R.string.clickno) + "\n"
+                )
+                .setCancelable(false)
+                .setPositiveButton(mContext.getResources().getString(R.string.btn_yes_dialog_question)
+                        , new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        GPS gps = new GPS(mContext);
+                        int internet = NetWorkState.getConnectivityStatus(mContext);
+                        if (internet == NetWorkState.TYPE_MOBILE ||
+                                internet == NetWorkState.TYPE_WIFI && gps.canGetLocation()) {
+                            new LocationTask(mContext, mFlag).execute();
+                            //new WeatherTask(WelcomeActivity.this, true).execute("london");
+                        } else gps.showSettingsAlert();
+                    }
+                })
+                .setNegativeButton(mContext.getResources().getString(R.string.btn_no_dialog_question)
+                        , new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        System.exit(0);
+                        //finish();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
     }
 }

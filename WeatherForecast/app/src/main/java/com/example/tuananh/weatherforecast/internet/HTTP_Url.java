@@ -26,8 +26,8 @@ public class HTTP_Url {
             httpURLConnection =
                     (HttpURLConnection) (new URL(url)).openConnection();
             httpURLConnection.setDoOutput(true);
-            httpURLConnection.setConnectTimeout(5000);
-            httpURLConnection.setReadTimeout(30 * 1000);
+            httpURLConnection.setConnectTimeout(20*1000);
+            httpURLConnection.setReadTimeout(20 * 1000);
             //connect to webservice
             httpURLConnection.connect();
 

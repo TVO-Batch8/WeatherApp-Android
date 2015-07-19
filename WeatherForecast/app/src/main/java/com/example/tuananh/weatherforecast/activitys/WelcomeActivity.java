@@ -45,33 +45,20 @@ public class WelcomeActivity extends Activity {
                 getBaseContext().getResources().getDisplayMetrics());
         getActionBar().setTitle(getResources().getString(R.string.app_name));
         setContentView(R.layout.activity_welcome);
-        /*String key = new SettingShare(WelcomeActivity.this)
-                .getShare(SettingShare.API_KEY, "513c19f62f591775");
-        String langauage = new SettingShare(WelcomeActivity.this)
-                .getShare(SettingShare.LANGUAGE, "");
-        String language_default = Locale.getDefault().getLanguage();
-
-        if (langauage.equals("")) {
-            url = HTTP_Url.URL + key +
-                    new SettingShare(this).chooseLanguage(language_default);
-        } else {
-            url = HTTP_Url.URL + key +
-                    new SettingShare(this).chooseLanguage(langauage);
-        }*/
 
         gps = new GPS(WelcomeActivity.this);
-
+        int internet = NetWorkState.getConnectivityStatus(WelcomeActivity.this);
+        if (internet == NetWorkState.TYPE_MOBILE || internet == NetWorkState.TYPE_WIFI && gps.canGetLocation()) {
+            new LocationTask(WelcomeActivity.this, true).execute();
+            //new WeatherTask(WelcomeActivity.this, true).execute("london");
+        } else gps.showSettingsAlert();
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        int internet = NetWorkState.getConnectivityStatus(WelcomeActivity.this);
-        if (internet == NetWorkState.TYPE_MOBILE || internet == NetWorkState.TYPE_WIFI && gps.canGetLocation()) {
-            new LocationTask(WelcomeActivity.this, true).execute();
-            //new WeatherTask(WelcomeActivity.this, true).execute("london");
-        } else gps.showSettingsAlert();
+
     }
 
     @Override

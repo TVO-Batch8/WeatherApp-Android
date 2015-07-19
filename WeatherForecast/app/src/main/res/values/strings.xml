@@ -66,4 +66,8 @@
     <string name="input_emty">you need input.</string>
     <string name="find">Not value</string>
     <string name="listcountry">List country</string>
+
+    <string name="clickyes">Click "yes" is refresh app</string>
+    <string name="clickno">Click "no" is exit</string>
+    <string name="refreshapp">Do you want to refresh or exit?</string>
 </resources>

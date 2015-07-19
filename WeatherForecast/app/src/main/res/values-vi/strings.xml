@@ -22,7 +22,7 @@
         <item>Trong tuần</item>
     </string-array>
     <string name="search_hint">Tìm thành phố..</string>
-    <string name="download">Xin chờ</string>
+    <string name="download">Xin chờ...</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 
@@ -53,4 +53,7 @@
     <string name="input_emty">bạn phải điền thông tin vào.</string>
     <string name="find">Không có giá trị</string>
     <string name="listcountry">Tên thành phố</string>
+    <string name="clickyes">Bấm "có" để cập nhật lại</string>
+    <string name="clickno">Bấm "không" để thoát</string>
+    <string name="refreshapp">Bạn có muốn thoát app hay cập nhật lại?</string>
 </resources>
