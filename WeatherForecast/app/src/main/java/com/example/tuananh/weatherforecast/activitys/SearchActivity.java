@@ -60,7 +60,7 @@ public class SearchActivity extends Activity implements View.OnClickListener{
                 if(edt_Request.getText().length() > 0) {
                     int internet = NetWorkState.getConnectivityStatus(this);
                     if (internet == NetWorkState.TYPE_MOBILE || internet == NetWorkState.TYPE_WIFI) {
-                        new LocationTask(this, false).execute();
+                        new WeatherTask(this, false).execute(edt_Request.getText().toString());
                     } else Toast.makeText(this, getResources().getString(R.string.messagedialog2)
                             , Toast.LENGTH_SHORT).show();
                 }
