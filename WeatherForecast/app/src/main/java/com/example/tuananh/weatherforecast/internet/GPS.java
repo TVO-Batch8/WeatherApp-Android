@@ -176,27 +176,56 @@ public class GPS extends Service implements LocationListener{
         return null;
     }
 
-    public void showSettingsAlert(){
+    /**
+     *
+     * @param mFlag is state of setting
+     *              if(true) setting is gps
+     *              else setting is internet
+     */
+    public void showSettingsAlert(boolean mFlag){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext, R.style.NewDialog);
 
-        // Setting Dialog Title
-        alertDialog.setTitle(mContext.getResources().getString(R.string.dialogtitle));
+        if(mFlag) {
+            // Setting Dialog Title
+            alertDialog.setTitle(mContext.getResources().getString(R.string.dialogtitle_gps));
 
-        // Setting Dialog Message
-        alertDialog.setMessage(mContext.getResources().getString(R.string.messagedialog));
+            // Setting Dialog Message
+            alertDialog.setMessage(mContext.getResources().getString(R.string.messagedialog_gps));
 
-        // Setting Icon to Dialog
-        //alertDialog.setIcon(R.drawable.delete);
+            // Setting Icon to Dialog
+            //alertDialog.setIcon(R.drawable.delete);
 
-        // On pressing Settings button
-        alertDialog.setPositiveButton(
-                mContext.getResources().getString(R.string.action_settings)
-                , new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog,int which) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                mContext.startActivity(intent);
-            }
-        });
+            // On pressing Settings button
+            alertDialog.setPositiveButton(
+                    mContext.getResources().getString(R.string.action_settings)
+                    , new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            mContext.startActivity(intent);
+                        }
+                    });
+        }
+        else
+        {
+            // Setting Dialog Title
+            alertDialog.setTitle(mContext.getResources().getString(R.string.dialogtitle_internet));
+
+            // Setting Dialog Message
+            alertDialog.setMessage(mContext.getResources().getString(R.string.messagedialog_internet));
+
+            // Setting Icon to Dialog
+            //alertDialog.setIcon(R.drawable.delete);
+
+            // On pressing Settings button
+            alertDialog.setPositiveButton(
+                    mContext.getResources().getString(R.string.action_settings)
+                    , new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                            mContext.startActivity(intent);
+                        }
+                    });
+        }
 
         alertDialog.setCancelable(false);
         // Showing Alert Message

@@ -214,11 +214,20 @@ public class WeatherTask extends AsyncTask<String, Integer, String> {
                     public void onClick(DialogInterface dialog, int id) {
                         GPS gps = new GPS(mContext);
                         int internet = NetWorkState.getConnectivityStatus(mContext);
-                        if (internet == NetWorkState.TYPE_MOBILE ||
-                                internet == NetWorkState.TYPE_WIFI && gps.canGetLocation()) {
-                            new LocationTask(mContext, mFlag).execute();
-                            //new WeatherTask(WelcomeActivity.this, true).execute("london");
-                        } else gps.showSettingsAlert();
+                        if (internet == NetWorkState.TYPE_MOBILE || internet == NetWorkState.TYPE_WIFI) {
+                            if( gps.canGetLocation()) {
+                                new LocationTask(mContext, true).execute();
+                                mFlag = true;
+                            }
+                            else {
+                                mFlag = false;
+                                gps.showSettingsAlert(true);
+                            }
+                        } else {
+                            mFlag = false;
+                            gps.showSettingsAlert(false);
+
+                        }
                     }
                 })
                 .setNegativeButton(mContext.getResources().getString(R.string.btn_no_dialog_question)

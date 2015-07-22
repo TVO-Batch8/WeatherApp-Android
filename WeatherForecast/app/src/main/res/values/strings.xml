@@ -54,8 +54,10 @@
     <string name="theme_pink">Stormy background</string>
     <string name="theme_default">Default background</string>
     <string name="please">Loading data</string>
-    <string name="dialogtitle">turn on internet or GPS</string>
-    <string name="messagedialog">GPS and internet is not enabled. Do you want to go to settings menu?</string>
+    <string name="dialogtitle_gps">Turn on GPS</string>
+    <string name="dialogtitle_internet">Turn on internet</string>
+    <string name="messagedialog_gps">GPS is not enabled. Do you want to go to settings menu?</string>
+    <string name="messagedialog_internet">Internet is not enabled. Do you want to go to settings menu?</string>
     <string name="messagedialog1">GPS is not enabled</string>
     <string name="messagedialog2">internet is not enabled</string>
     <string name="title_activity_search">Search City</string>

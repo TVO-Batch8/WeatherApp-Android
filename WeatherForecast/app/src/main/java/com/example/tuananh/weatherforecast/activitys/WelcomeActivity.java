@@ -47,21 +47,25 @@ public class WelcomeActivity extends Activity {
         getActionBar().setTitle(getResources().getString(R.string.app_name));
         setContentView(R.layout.activity_welcome);
 
-        gps = new GPS(WelcomeActivity.this);
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        gps = new GPS(WelcomeActivity.this);
         int internet = NetWorkState.getConnectivityStatus(WelcomeActivity.this);
-        if (internet == NetWorkState.TYPE_MOBILE || internet == NetWorkState.TYPE_WIFI && gps.canGetLocation()) {
-            new LocationTask(WelcomeActivity.this, true).execute();
-            mFlag = true;
-            //new WeatherTask(WelcomeActivity.this, true).execute("london");
+        if (internet == NetWorkState.TYPE_MOBILE || internet == NetWorkState.TYPE_WIFI) {
+            if( gps.canGetLocation()) {
+                new LocationTask(WelcomeActivity.this, true).execute();
+                mFlag = true;
+            }
+            else {
+                mFlag = false;
+                gps.showSettingsAlert(true);
+            }
         } else {
             mFlag = false;
-            gps.showSettingsAlert();
+            gps.showSettingsAlert(false);
 
         }
 
