@@ -45,7 +45,7 @@
     <string name="dialogtitle_internet">Bật internet</string>
     <string name="messagedialog_gps">GPS không kết nối. Bạn có muốn đến phần cài đặt không?</string>
     <string name="messagedialog_internet">Internet không kết nối. Bạn có muốn đến phần cài đặt không?</string>
-    <string name="messagedialog1">GPS hoặc internet không kết nối</string>
+    <string name="messagedialog1">GPS không kết nối</string>
     <string name="messagedialog2">internet không kết nối</string>
     <string name="title_activity_search">Tìm kiếm thành phố</string>
     <string name="btn_search">Tìm kiếm</string>

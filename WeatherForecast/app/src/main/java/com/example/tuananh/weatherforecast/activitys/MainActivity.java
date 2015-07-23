@@ -66,9 +66,6 @@ public class MainActivity extends FragmentActivity {
 
         setContentView(R.layout.activity_main);
 
-        gps = new GPS(MainActivity.this);
-
-        // TODO: 17/07/2015
         String language_before = new SettingShare(this)
                 .getShare(SettingShare.LANGUAGE_BEFORE, "");
         if (language_before.equals("")
@@ -192,17 +189,24 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void setRefresh() {
+        gps = new GPS(MainActivity.this);
         int internet = NetWorkState.getConnectivityStatus(MainActivity.this);
-        if (internet == NetWorkState.TYPE_MOBILE || internet == NetWorkState.TYPE_WIFI && gps.canGetLocation()) {
-            new LocationTask(MainActivity.this, mFlag).execute();
-        } else Toast.makeText(this, getResources().getString(R.string.messagedialog1)
+        if (internet == NetWorkState.TYPE_MOBILE || internet == NetWorkState.TYPE_WIFI) {
+            if (gps.canGetLocation()) {
+                new LocationTask(MainActivity.this, mFlag).execute();
+
+            } else Toast.makeText(this, getResources().getString(R.string.messagedialog1)
+                    , Toast.LENGTH_SHORT).show();
+        }
+        else Toast.makeText(this, getResources().getString(R.string.messagedialog2)
                 , Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-            finish();
+        finish();
         Log.d("lifeactivity", "onStop");
     }
 

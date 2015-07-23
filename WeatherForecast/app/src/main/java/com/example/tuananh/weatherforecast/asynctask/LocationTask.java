@@ -23,7 +23,6 @@ public class LocationTask extends AsyncTask<String, Integer, String> {
     public LocationTask(Context context, boolean Flag) {
         this.mContext = context;
         this.mFlag = Flag;
-        gps = new GPS(mContext);
     }
 
     @Override
@@ -41,6 +40,7 @@ public class LocationTask extends AsyncTask<String, Integer, String> {
         String url = "";
 
         for (int i = 0; i < i + 1; i++) {
+            gps = new GPS(mContext);
             if (gps.getLatitude() != 0 && gps.getLongitude() != 0) {
                 Log.e("getinglocation", gps.getLatitude() + "," + gps.getLongitude());
                 url = gps.getLatitude() + "," + gps.getLongitude();

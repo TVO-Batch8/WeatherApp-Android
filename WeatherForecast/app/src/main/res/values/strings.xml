@@ -59,7 +59,7 @@
     <string name="messagedialog_gps">GPS is not enabled. Do you want to go to settings menu?</string>
     <string name="messagedialog_internet">Internet is not enabled. Do you want to go to settings menu?</string>
     <string name="messagedialog1">GPS is not enabled</string>
-    <string name="messagedialog2">internet is not enabled</string>
+    <string name="messagedialog2">Internet is not enabled</string>
     <string name="title_activity_search">Search City</string>
     <string name="btn_search">Search</string>
     <string name="edt_hint">City</string>
