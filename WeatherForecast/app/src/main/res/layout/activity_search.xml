@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/backgroud_search"
     tools:context="com.example.tuananh.weatherforecast.activitys.SearchActivity">
 
     <EditText
@@ -31,17 +32,6 @@
         android:layout_weight="1"
         android:layout_below="@+id/edt_search"
         android:layout_alignEnd="@+id/edt_search" />
-
-    <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pb_loadsearch"
-        android:layout_above="@+id/edt_search"
-        android:layout_centerHorizontal="true"
-        android:visibility="invisible"
-        android:layout_toEndOf="@+id/btn_search"
-        android:layout_marginBottom="81dp" />
 
     <!--<ProgressBar
         style="?android:attr/progressBarStyleLarge"

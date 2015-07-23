@@ -23,6 +23,7 @@ public class LocationTask extends AsyncTask<String, Integer, String> {
     public LocationTask(Context context, boolean Flag) {
         this.mContext = context;
         this.mFlag = Flag;
+        gps = new GPS(mContext);
     }
 
     @Override

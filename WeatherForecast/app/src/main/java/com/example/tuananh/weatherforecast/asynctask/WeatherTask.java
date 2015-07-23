@@ -8,12 +8,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.tuananh.weatherforecast.R;
 import com.example.tuananh.weatherforecast.activitys.MainActivity;
-import com.example.tuananh.weatherforecast.activitys.SearchActivity;
 import com.example.tuananh.weatherforecast.dummy.Country;
 import com.example.tuananh.weatherforecast.dummy.CurrentWeather;
 import com.example.tuananh.weatherforecast.dummy.WeekWeather;
@@ -77,34 +75,24 @@ public class WeatherTask extends AsyncTask<String, Integer, String> {
         String langauage = new SettingShare(mContext)
                 .getShare(SettingShare.LANGUAGE, Locale.getDefault().getLanguage());
 
-        url = HTTP_Url.URL + new ReadFile(mContext).getFile(0) +
+        url = HTTP_Url.URL + new ReadFile(mContext).getFile(key) +
                 new SettingShare(mContext).chooseLanguage(langauage)
                 + params[0] + HTTP_Url.JSON;
         String getUrl = "";
         location = params[0];
         try {
             getUrl = HTTP_Url.readJSON(url);
+
         } catch (SocketTimeoutException e) {
             e.printStackTrace();
         }
-            /*mError = WeatherJSONParser.readError(getUrl);
-            if (mError.equals("") || mError == null) {
-                key = key + 1;
-                if (key >= new ReadFile(mContext).getCount()){
-                    key = 0;
-                }
-                url = HTTP_Url.URL + new ReadFile(mContext).getFile(key) +
-                        new SettingShare(mContext).chooseLanguage(langauage)
-                        + params[0] + HTTP_Url.JSON;
-                getUrl = HTTP_Url.readJSON(url);
-                new SettingShare(mContext).saveShareInt(SettingShare.API_KEY, key);
-            }*/
         mArrayList = new ArrayList<>();
         arrayCountry = new ArrayList<>();
         getCurrent = new CurrentWeather();
 
         if (getUrl != null) {
             getCurrent = WeatherJSONParser.getCurrentWeather(getUrl);
+            String error = WeatherJSONParser.readError(getUrl);
             mCount = WeatherJSONParser.countArrayWeek(getUrl);
             for (int i = 0; i < mCount; i++) {
                 WeekWeather getWeek;
@@ -206,8 +194,8 @@ public class WeatherTask extends AsyncTask<String, Integer, String> {
 
         // set dialog message
         alertDialogBuilder
-                .setMessage(
-                        mContext.getResources().getString(R.string.refreshapp) + "\n"
+                .setMessage(mContext.getResources().getString(R.string.messagedialog2)+", "
+                        +mContext.getResources().getString(R.string.refreshapp) + "\n"
                                 + mContext.getResources().getString(R.string.clickyes) + "\n"
                                 + mContext.getResources().getString(R.string.clickno)
                 )

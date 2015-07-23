@@ -7,11 +7,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 
 import android.util.Log;
@@ -21,10 +17,7 @@ import android.widget.Toast;
 
 import com.example.tuananh.weatherforecast.R;
 import com.example.tuananh.weatherforecast.adapter.TabAdapter;
-import com.example.tuananh.weatherforecast.asynctask.LocationTask;
-import com.example.tuananh.weatherforecast.fragments.CurrentWeatherFragment;
-import com.example.tuananh.weatherforecast.fragments.ListSettingFragment;
-import com.example.tuananh.weatherforecast.fragments.WeekWeatherFragment;
+import com.example.tuananh.weatherforecast.asynctask.WeatherTask;
 import com.example.tuananh.weatherforecast.internet.GPS;
 import com.example.tuananh.weatherforecast.other.NetWorkState;
 import com.example.tuananh.weatherforecast.other.ReadFile;
@@ -35,15 +28,12 @@ import com.example.tuananh.weatherforecast.tabs.SlidingTabLayout;
 import java.util.Locale;
 
 public class MainActivity extends FragmentActivity {
-
-    boolean mFlag;
     ViewPager mPager;
     TabAdapter adapter;
     String[] arrayTab;
     SlidingTabLayout tabs;
     public SQLiteDatabase mDb;
     public MyDatabase mDbHelper;
-    private GPS gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,18 +116,15 @@ public class MainActivity extends FragmentActivity {
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_settings: {
-                mFlag = true;
                 Intent intent = new Intent(MainActivity.this, SettingActivity.class);
                 startActivity(intent);
                 return true;
             }
             case R.id.action_search:
-                mFlag = true;
                 Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.action_refesh:
-                mFlag = true;
                 setRefresh();
                 return true;
         }
@@ -189,11 +176,25 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void setRefresh() {
-        gps = new GPS(MainActivity.this);
+        GPS gps = new GPS(MainActivity.this);
         int internet = NetWorkState.getConnectivityStatus(MainActivity.this);
         if (internet == NetWorkState.TYPE_MOBILE || internet == NetWorkState.TYPE_WIFI) {
             if (gps.canGetLocation()) {
-                new LocationTask(MainActivity.this, mFlag).execute();
+                for (int i = 0; i < i + 1; i++) {
+                    gps = new GPS(MainActivity.this);
+                    if (gps.getLatitude() != 0 && gps.getLongitude() != 0) {
+                        Log.e("getinglocation", gps.getLatitude() + "," + gps.getLongitude());
+                        String url = gps.getLatitude() + "," + gps.getLongitude();
+                        new WeatherTask(MainActivity.this, false).execute(url);
+                        break;
+                    }
+                    Log.e("getinglocation", i + "");
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
 
             } else Toast.makeText(this, getResources().getString(R.string.messagedialog1)
                     , Toast.LENGTH_SHORT).show();
