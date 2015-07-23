@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.tuananh.weatherforecast.R;
-import com.example.tuananh.weatherforecast.asynctask.LocationTask;
 import com.example.tuananh.weatherforecast.asynctask.WeatherTask;
 import com.example.tuananh.weatherforecast.internet.GPS;
 import com.example.tuananh.weatherforecast.other.NetWorkState;
@@ -19,7 +18,6 @@ import java.util.Locale;
 public class WelcomeActivity extends Activity {
 
     private boolean mFlag = true;
-    private GPS gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +43,7 @@ public class WelcomeActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        gps = new GPS(WelcomeActivity.this);
+        GPS gps = new GPS(WelcomeActivity.this);
         int internet = NetWorkState.getConnectivityStatus(WelcomeActivity.this);
         if (internet == NetWorkState.TYPE_MOBILE || internet == NetWorkState.TYPE_WIFI) {
             if (gps.canGetLocation()) {

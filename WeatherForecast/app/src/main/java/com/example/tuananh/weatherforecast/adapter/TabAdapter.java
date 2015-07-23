@@ -3,13 +3,9 @@ package com.example.tuananh.weatherforecast.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
 import com.example.tuananh.weatherforecast.fragments.CurrentWeatherFragment;
 import com.example.tuananh.weatherforecast.fragments.WeekWeatherFragment;
 
-/**
- * Created by TuanAnh on 03/07/2015.
- */
 public class TabAdapter extends FragmentPagerAdapter {
     int count = 2;
     String[] title;

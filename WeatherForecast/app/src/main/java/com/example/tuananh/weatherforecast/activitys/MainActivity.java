@@ -37,7 +37,6 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final ActionBar actionBar;
         super.onCreate(savedInstanceState);
         int theme = new SettingShare(this)
                 .getShareInt(SettingShare.THEME, 0);
@@ -56,8 +55,10 @@ public class MainActivity extends FragmentActivity {
 
         setContentView(R.layout.activity_main);
 
+        //update information when change language
         String language_before = new SettingShare(this)
                 .getShare(SettingShare.LANGUAGE_BEFORE, "");
+
         if (language_before.equals("")
                 || language_before.equals(Locale.getDefault().getLanguage())) {
             if (language_before.equals("")) {
@@ -69,13 +70,15 @@ public class MainActivity extends FragmentActivity {
                     Locale.getDefault().getLanguage());
             setShowDialog();
         }
+
+
         arrayTab = getResources().getStringArray(R.array.tab_name);
 
-        actionBar = getActionBar();
+/*        actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(false);
-        }
+        }*/
 
         adapter = new TabAdapter(getSupportFragmentManager(), arrayTab);
 
